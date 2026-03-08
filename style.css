@@ -96,9 +96,9 @@ body {
   grid-template-rows: repeat(5, 1fr);
   gap: var(--gap);
   padding: 0 var(--pad);
-  /* 5 rows + bottom spacer row */
-  height: calc((100vw - 2 * var(--pad) - 3 * var(--gap)) / 4 * 5 + 4 * var(--gap));
-  max-height: calc((500px - 2 * var(--pad) - 3 * var(--gap)) / 4 * 5 + 4 * var(--gap));
+  /* 5 rows, height = width * 0.7 */
+  height: calc((100vw - 2 * var(--pad) - 3 * var(--gap)) / 4 * 0.7 * 5 + 4 * var(--gap));
+  max-height: calc((500px - 2 * var(--pad) - 3 * var(--gap)) / 4 * 0.7 * 5 + 4 * var(--gap));
 }
 
 /* ─── Main buttons: rounded square ─── */
@@ -134,7 +134,7 @@ body {
 /* ─── Bottom spacer: prevent browser bar clipping ─── */
 #bottom-spacer {
   flex-shrink: 0;
-  height: calc((100vw - 2 * var(--pad) - 3 * var(--gap)) / 4);
-  max-height: calc((500px - 2 * var(--pad) - 3 * var(--gap)) / 4);
+  height: calc((100vw - 2 * var(--pad) - 3 * var(--gap)) / 4 * 0.7);
+  max-height: calc((500px - 2 * var(--pad) - 3 * var(--gap)) / 4 * 0.7);
   background: #000;
 }
