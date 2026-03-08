@@ -80,8 +80,8 @@ body {
 #sci-panel button {
   background: #1c1c1e;
   color: #fff;
-  font-size: clamp(13px, 3.8vw, 18px);
-  height: 38px;
+  font-size: clamp(16px, 5vw, 24px);
+  height: 44px;
   border-radius: var(--radius);
   border: none;
   cursor: pointer;
