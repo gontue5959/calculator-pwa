@@ -10,6 +10,9 @@
 html, body {
   height: 100%;
   overflow: hidden;
+  overscroll-behavior: none;
+  position: fixed;
+  width: 100%;
   background: #000;
   color: #fff;
   font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
@@ -49,7 +52,8 @@ body {
   text-align: right;
   width: 100%;
   white-space: nowrap;
-  overflow-x: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
   min-height: 22px;
 }
 
@@ -58,7 +62,8 @@ body {
   text-align: right;
   width: 100%;
   white-space: nowrap;
-  overflow-x: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
   line-height: 1.1;
   font-size: 80px;
 }
@@ -75,8 +80,8 @@ body {
 #sci-panel button {
   background: #1c1c1e;
   color: #fff;
-  font-size: clamp(10px, 3vw, 14px);
-  height: 34px;
+  font-size: clamp(13px, 3.8vw, 18px);
+  height: 38px;
   border-radius: var(--radius);
   border: none;
   cursor: pointer;
