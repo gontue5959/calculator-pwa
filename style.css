@@ -25,15 +25,10 @@ body {
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
-/* ─── Button size base ───
-   4 columns, gap 10px, side padding 10px each
-   btn = (width - 20 - 3*10) / 4 = (width - 50) / 4
-   Use min(100vw, 500px) as width reference
-*/
 :root {
   --pad: 10px;
-  --gap: 10px;
-  --btn: calc((min(100vw, 500px) - 2 * var(--pad) - 3 * var(--gap)) / 4);
+  --gap: 8px;
+  --radius: 12px;
 }
 
 /* ─── Display ─── */
@@ -65,7 +60,6 @@ body {
   white-space: nowrap;
   overflow-x: auto;
   line-height: 1.1;
-  /* font-size set by JS autoFit */
   font-size: 80px;
 }
 
@@ -74,7 +68,7 @@ body {
   flex-shrink: 0;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 1px;
+  gap: 4px;
   padding: 6px var(--pad) 4px;
 }
 
@@ -83,7 +77,7 @@ body {
   color: #fff;
   font-size: 14px;
   height: 34px;
-  border-radius: 8px;
+  border-radius: var(--radius);
   border: none;
   cursor: pointer;
   font-family: inherit;
@@ -98,21 +92,24 @@ body {
 #main-grid {
   flex-shrink: 0;
   display: grid;
-  grid-template-columns: repeat(4, var(--btn));
-  grid-template-rows: repeat(5, var(--btn));
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(5, 1fr);
   gap: var(--gap);
-  padding: 0 var(--pad) var(--pad);
+  padding: 0 var(--pad);
+  /* 5 rows + bottom spacer row */
+  height: calc((100vw - 2 * var(--pad) - 3 * var(--gap)) / 4 * 5 + 4 * var(--gap));
+  max-height: calc((500px - 2 * var(--pad) - 3 * var(--gap)) / 4 * 5 + 4 * var(--gap));
 }
 
-/* all main buttons are circles */
+/* ─── Main buttons: rounded square ─── */
 #main-grid button {
-  width: var(--btn);
-  height: var(--btn);
-  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius);
   border: none;
   cursor: pointer;
   font-family: inherit;
-  font-size: calc(var(--btn) * 0.38);
+  font-size: 26px;
   font-weight: 400;
   color: #fff;
   display: flex;
@@ -121,18 +118,23 @@ body {
 }
 
 #main-grid button.num { background: #333; }
-#main-grid button.fn  { background: #a5a5a5; color: #000; font-size: calc(var(--btn) * 0.28); }
-#main-grid button.op  { background: #ff9f0a; font-size: calc(var(--btn) * 0.44); font-weight: 300; }
+#main-grid button.fn  { background: #a5a5a5; color: #000; font-size: 20px; }
+#main-grid button.op  { background: #ff9f0a; font-size: 30px; font-weight: 300; }
 #main-grid button.op.active { background: #fff; color: #ff9f0a; }
 
-/* zero: pill across 2 columns */
+/* zero: span 2 columns */
 #main-grid button.zero {
   grid-column: span 2;
-  width: calc(var(--btn) * 2 + var(--gap));
-  border-radius: calc(var(--btn) / 2);
   justify-content: flex-start;
-  padding-left: calc(var(--btn) * 0.35);
+  padding-left: 24px;
 }
 
-/* active press feedback */
 #main-grid button:active { filter: brightness(1.4); }
+
+/* ─── Bottom spacer: prevent browser bar clipping ─── */
+#bottom-spacer {
+  flex-shrink: 0;
+  height: calc((100vw - 2 * var(--pad) - 3 * var(--gap)) / 4);
+  max-height: calc((500px - 2 * var(--pad) - 3 * var(--gap)) / 4);
+  background: #000;
+}
