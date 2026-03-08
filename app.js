@@ -10,10 +10,21 @@ const $expr   = document.getElementById('expression');
 
 // ── Display ──
 function updateDisplay() {
-  const show = displayExpr || '0';
+  const show = addThousandSep(displayExpr) || '0';
   $result.textContent = show;
   $expr.textContent = '';
   autoFit();
+}
+
+// 把算式中的數字加千分位，保留運算符和函數名不動
+function addThousandSep(str) {
+  if (!str) return str;
+  // 匹配連續數字（可含小數點），加千分位
+  return str.replace(/\d+(\.\d+)?/g, (m) => {
+    const parts = m.split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return parts.join('.');
+  });
 }
 
 function autoFit() {

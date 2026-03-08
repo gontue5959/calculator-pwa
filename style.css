@@ -130,11 +130,9 @@ body {
 #main-grid button.op  { background: #ff9f0a; font-size: 30px; font-weight: 300; }
 #main-grid button.op.active { background: #fff; color: #ff9f0a; }
 
-/* zero: span 2 columns */
-#main-grid button.zero {
+/* = button: span 2 columns */
+#main-grid button.eq {
   grid-column: span 2;
-  justify-content: flex-start;
-  padding-left: 24px;
 }
 
 #main-grid button:active { filter: brightness(1.4); }
