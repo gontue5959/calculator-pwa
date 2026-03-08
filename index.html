@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#000000">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <title>工程計算機</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Display -->
+  <div id="display">
+    <div id="expression"></div>
+    <div id="result">0</div>
+  </div>
+
+  <!-- Simple engineering panel -->
+  <div id="sci-panel">
+    <button onclick="pressParenOpen()">(</button>
+    <button onclick="pressParenClose()">)</button>
+    <button onclick="applySciFunc('x2')">x²</button>
+    <button onclick="applySciFunc('sqrt')">√x</button>
+    <button onclick="pressXY()">xʸ</button>
+    <button onclick="applySciFunc('inv')">1/x</button>
+    <button onclick="pressBackspace()">⌫</button>
+  </div>
+
+  <!-- Main buttons -->
+  <div id="main-grid">
+    <button class="fn" onclick="pressClear()">AC</button>
+    <button class="fn" onclick="pressToggleSign()">+/−</button>
+    <button class="fn" onclick="pressPercent()">%</button>
+    <button class="op" id="op-div" onclick="inputOperator('/')">÷</button>
+
+    <button class="num" onclick="inputDigit('7')">7</button>
+    <button class="num" onclick="inputDigit('8')">8</button>
+    <button class="num" onclick="inputDigit('9')">9</button>
+    <button class="op" id="op-mul" onclick="inputOperator('*')">×</button>
+
+    <button class="num" onclick="inputDigit('4')">4</button>
+    <button class="num" onclick="inputDigit('5')">5</button>
+    <button class="num" onclick="inputDigit('6')">6</button>
+    <button class="op" id="op-sub" onclick="inputOperator('-')">−</button>
+
+    <button class="num" onclick="inputDigit('1')">1</button>
+    <button class="num" onclick="inputDigit('2')">2</button>
+    <button class="num" onclick="inputDigit('3')">3</button>
+    <button class="op" id="op-add" onclick="inputOperator('+')">+</button>
+
+    <button class="num zero" onclick="inputDigit('0')">0</button>
+    <button class="num" onclick="inputDecimal()">.</button>
+    <button class="op" onclick="pressEquals()">=</button>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
