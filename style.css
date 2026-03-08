@@ -137,7 +137,7 @@ body {
 /* ─── Bottom spacer: prevent browser bar clipping ─── */
 #bottom-spacer {
   flex-shrink: 0;
-  height: calc((100vw - 2 * var(--pad) - 3 * var(--gap)) / 4 * 0.7);
-  max-height: calc((500px - 2 * var(--pad) - 3 * var(--gap)) / 4 * 0.7);
+  height: calc((100vw - 2 * var(--pad) - 3 * var(--gap)) / 4 * 0.91);
+  max-height: calc((500px - 2 * var(--pad) - 3 * var(--gap)) / 4 * 0.91);
   background: #000;
 }
