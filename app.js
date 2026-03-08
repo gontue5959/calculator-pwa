@@ -4,6 +4,8 @@ let displayExpr = '';  // 顯示用（美化符號）
 let freshResult = false;
 let lastAnswer = null;
 let parenDepth = 0;
+let repeatOp = null;    // 連按 = 用：{ op: '+', val: 3 }
+let repeatExpr = null;  // 連按 = 顯示用：'+3'
 
 const $result = document.getElementById('result');
 const $expr   = document.getElementById('expression');
@@ -187,6 +189,31 @@ function inputOperator(op) {
 }
 
 function pressEquals() {
+  // 連按 =：用上次的運算符和運算元重複計算
+  if (freshResult && repeatOp) {
+    try {
+      const evalStr = expression + repeatOp.op + repeatOp.val;
+      const result = evalExpr(evalStr);
+      if (result === null || isNaN(result)) {
+        $result.textContent = 'Error';
+        $result.style.fontSize = '80px';
+        return;
+      }
+      const resultStr = formatNum(result);
+      $expr.textContent = formatNum(lastAnswer) + repeatExpr + ' =';
+      $result.textContent = resultStr;
+      autoFit();
+      expression = String(result);
+      displayExpr = resultStr;
+      lastAnswer = result;
+    } catch {
+      $result.textContent = 'Error';
+      $result.style.fontSize = '80px';
+    }
+    clearOpHighlight();
+    return;
+  }
+
   if (!expression) return;
   try {
     // 自動補右括號
@@ -197,6 +224,17 @@ function pressEquals() {
     }
     // 結尾是運算符就移除
     evalStr = evalStr.replace(/[+\-*/^]+$/, '');
+
+    // 記住最後的運算符和運算元，供連按 = 使用
+    const repeatMatch = evalStr.match(/.*([+\-*/^])(.+)$/);
+    if (repeatMatch) {
+      const dispMap = { '+':'+', '-':'−', '*':'×', '/':'÷', '^':'^' };
+      repeatOp = { op: repeatMatch[1], val: repeatMatch[2] };
+      repeatExpr = (dispMap[repeatMatch[1]] || repeatMatch[1]) + addThousandSep(repeatMatch[2]);
+    } else {
+      repeatOp = null;
+      repeatExpr = null;
+    }
 
     const result = evalExpr(evalStr);
     if (result === null || isNaN(result)) {
@@ -223,6 +261,7 @@ function pressEquals() {
 function pressClear() {
   expression = ''; displayExpr = '';
   freshResult = false; lastAnswer = null; parenDepth = 0;
+  repeatOp = null; repeatExpr = null;
   updateDisplay();
   clearOpHighlight();
 }
