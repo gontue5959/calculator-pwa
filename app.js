@@ -16,6 +16,12 @@ function updateDisplay() {
   $result.textContent = show;
   $expr.textContent = '';
   autoFit();
+  scrollToEnd();
+}
+
+function scrollToEnd() {
+  $result.scrollLeft = $result.scrollWidth;
+  $expr.scrollLeft = $expr.scrollWidth;
 }
 
 // 把算式中的數字加千分位，保留運算符和函數名不動
@@ -188,6 +194,22 @@ function inputOperator(op) {
   if (btn) btn.classList.add('active');
 }
 
+// 找最後一個二元運算符位置（跳過括號內、一元負號）
+function findLastBinaryOp(expr) {
+  let depth = 0;
+  for (let i = expr.length - 1; i >= 0; i--) {
+    if (expr[i] === ')') depth++;
+    else if (expr[i] === '(') depth--;
+    else if (depth === 0 && '+-*/^'.includes(expr[i])) {
+      if (i === 0) continue;
+      const prev = expr[i - 1];
+      if ('+-*/^('.includes(prev)) continue;
+      return i;
+    }
+  }
+  return -1;
+}
+
 function pressEquals() {
   // 連按 =：用上次的運算符和運算元重複計算
   if (freshResult && repeatOp) {
@@ -200,9 +222,10 @@ function pressEquals() {
         return;
       }
       const resultStr = formatNum(result);
-      $expr.textContent = formatNum(lastAnswer) + repeatExpr + ' =';
+      $expr.textContent = addThousandSep(formatNum(lastAnswer) + repeatExpr) + ' =';
       $result.textContent = resultStr;
       autoFit();
+      scrollToEnd();
       expression = String(result);
       displayExpr = resultStr;
       lastAnswer = result;
@@ -226,11 +249,13 @@ function pressEquals() {
     evalStr = evalStr.replace(/[+\-*/^]+$/, '');
 
     // 記住最後的運算符和運算元，供連按 = 使用
-    const repeatMatch = evalStr.match(/.*([+\-*/^])(.+)$/);
-    if (repeatMatch) {
+    const opIdx = findLastBinaryOp(evalStr);
+    if (opIdx >= 0) {
+      const op = evalStr[opIdx];
+      const val = evalStr.slice(opIdx + 1);
       const dispMap = { '+':'+', '-':'−', '*':'×', '/':'÷', '^':'^' };
-      repeatOp = { op: repeatMatch[1], val: repeatMatch[2] };
-      repeatExpr = (dispMap[repeatMatch[1]] || repeatMatch[1]) + addThousandSep(repeatMatch[2]);
+      repeatOp = { op, val };
+      repeatExpr = (dispMap[op] || op) + addThousandSep(val);
     } else {
       repeatOp = null;
       repeatExpr = null;
@@ -243,9 +268,10 @@ function pressEquals() {
       return;
     }
     const resultStr = formatNum(result);
-    $expr.textContent = evalDisplay + ' =';
+    $expr.textContent = addThousandSep(evalDisplay) + ' =';
     $result.textContent = resultStr;
     autoFit();
+    scrollToEnd();
     expression = String(result);
     displayExpr = resultStr;
     lastAnswer = result;

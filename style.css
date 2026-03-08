@@ -52,8 +52,8 @@ body {
   text-align: right;
   width: 100%;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow-x: auto;
+  scrollbar-width: none;
   min-height: 22px;
 }
 
@@ -62,10 +62,15 @@ body {
   text-align: right;
   width: 100%;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow-x: auto;
+  scrollbar-width: none;
   line-height: 1.1;
   font-size: 80px;
+}
+
+#result::-webkit-scrollbar,
+#expression::-webkit-scrollbar {
+  display: none;
 }
 
 /* ─── Sci Panel ─── */
