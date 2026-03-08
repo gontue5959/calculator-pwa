@@ -75,7 +75,7 @@ body {
 #sci-panel button {
   background: #1c1c1e;
   color: #fff;
-  font-size: 14px;
+  font-size: clamp(10px, 3vw, 14px);
   height: 34px;
   border-radius: var(--radius);
   border: none;
@@ -84,6 +84,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 0 2px;
 }
 
 #sci-panel button:active { filter: brightness(1.7); }
