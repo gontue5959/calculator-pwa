@@ -44,9 +44,13 @@ function autoFit() {
 function formatNum(n) {
   if (typeof n !== 'number') return String(n);
   if (!isFinite(n)) return n > 0 ? '∞' : '-∞';
-  if (Number.isInteger(n) && Math.abs(n) < 1e15) return n.toLocaleString('en-US');
   if (Math.abs(n) >= 1e15 || (Math.abs(n) < 1e-10 && n !== 0)) return n.toExponential(6);
-  return parseFloat(n.toPrecision(10)).toString();
+  if (Number.isInteger(n)) return n.toLocaleString('en-US');
+  // 小數也加千分位
+  const s = parseFloat(n.toPrecision(10)).toString();
+  const parts = s.split('.');
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return parts.join('.');
 }
 
 // ── Expression Parser ──
